@@ -2,9 +2,10 @@ import {
     createLabeledSilentPaymentAddress,
     decodeSilentPaymentAddress,
     encodeSilentPaymentAddress,
+    parseSilentBlock,
 } from '../src';
 import { Buffer } from 'buffer';
-import { unlabelled, labelled } from './fixtures/encoding';
+import { unlabelled, labelled, silentBlock } from './fixtures/encoding';
 
 describe('Encoding', () => {
     describe.each(unlabelled)('Encode/Decode SP', (data) => {
@@ -37,4 +38,22 @@ describe('Encoding', () => {
             ).toBe(address);
         },
     );
+
+    it.each(silentBlock)('should parse silent block', (blockData) => {
+        const parsedBlock = parseSilentBlock(
+            Buffer.from(blockData.encodedBlockHex, 'hex'),
+        );
+        expect(parsedBlock).toStrictEqual({
+            type: blockData.type,
+            transactions: blockData.transactions.map((tx) => ({
+                txid: tx.id,
+                scanTweak: tx.scanTweak,
+                outputs: tx.outputs.map((output) => ({
+                    pubKey: output.pubKey,
+                    value: output.value,
+                    vout: output.vout,
+                })),
+            })),
+        });
+    });
 });
