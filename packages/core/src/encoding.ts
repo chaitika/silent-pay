@@ -90,13 +90,13 @@ export const parseSilentBlock = (data: Buffer): SilentBlock => {
             const value = Number(data.readBigUInt64BE(cursor));
             cursor += 8;
 
-            const pubkey = data.subarray(cursor, cursor + 32).toString('hex');
+            const pubKey = data.subarray(cursor, cursor + 32).toString('hex');
             cursor += 32;
 
             const vout = data.readUint32BE(cursor);
             cursor += 4;
 
-            outputs.push({ value, pubkey, vout });
+            outputs.push({ value, pubKey, vout });
         }
 
         const scanTweak = data.subarray(cursor, cursor + 33).toString('hex');

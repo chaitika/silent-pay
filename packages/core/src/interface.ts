@@ -36,7 +36,7 @@ export type SilentBlock = {
         txid: string;
         outputs: {
             value: number;
-            pubkey: string;
+            pubKey: string;
             vout: number;
         }[];
         scanTweak: string;
