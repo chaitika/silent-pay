@@ -71,9 +71,8 @@ const hrpFromNetwork = (network: Network): string => {
 };
 
 export const parseSilentBlock = (data: Buffer): SilentBlock => {
-    const type = data.readUInt8(0);    // read 8 bits from 0th index // unsigned integer - UInt
+    const type = data.readUInt8(0);
     const transactions = [];
-
     let cursor = 1;
     const count = readVarInt(data, cursor);
     cursor += encodingLength(count);
