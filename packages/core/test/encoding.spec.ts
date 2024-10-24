@@ -43,17 +43,6 @@ describe('Encoding', () => {
         const parsedBlock = parseSilentBlock(
             Buffer.from(blockData.encodedBlockHex, 'hex'),
         );
-        expect(parsedBlock).toStrictEqual({
-            type: blockData.type,
-            transactions: blockData.transactions.map((tx) => ({
-                txid: tx.id,
-                scanTweak: tx.scanTweak,
-                outputs: tx.outputs.map((output) => ({
-                    pubKey: output.pubKey,
-                    value: output.value,
-                    vout: output.vout,
-                })),
-            })),
-        });
+        expect(parsedBlock).toStrictEqual(blockData.parsedBlock);
     });
 });
